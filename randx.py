@@ -23,7 +23,7 @@ def desert_island(n,size,seed):
     return output
 
 """
-rand_unif uses Inverse Transform Theory to generate uniform random numbers between a and b. 
+rand_unif uses the Inverse Transform Method to generate uniform random numbers between a and b. 
     a = minimum value
     b = maximum value
     size = number of random numbers to be be generated
@@ -49,7 +49,7 @@ def rand_unif(a,b,size, seed=42):
     return unif_output
 
 """
-rand_triangular uses Inverse Transform Theory to generate random numbers from a triangular distribution between a and b. 
+rand_triangular uses the Inverse Transform Method to generate random numbers from a triangular distribution between a and b. 
     a = minimum value
     b = maximum value
     c = mode value
@@ -58,7 +58,7 @@ rand_triangular uses Inverse Transform Theory to generate random numbers from a 
 Algorithm from math.wm.edu
 """
 
-def rand_triangular(a,c,b,size, seed=42):
+def rand_tria(a,c,b,size, seed=42):
     if not isinstance(a, (float, int)):
         raise TypeError('a must be numeric')
     if not isinstance(b, (float, int)):
@@ -87,7 +87,7 @@ def rand_triangular(a,c,b,size, seed=42):
     return tri_output
 
 """
-rand_exp uses Inverse Transform Theory to generate random numbers from an exponential distribution with parameter lambda(l). 
+rand_exp uses the Inverse Transform Method to generate random numbers from an exponential distribution with parameter lambda(l). 
     l = lambda (rate)
     size = number of random numbers to be be generated
     seed = starting seed
@@ -114,22 +114,22 @@ def rand_exp(l, size, seed=42):
     return exp_output
 
 """
-rand_weibull uses Inverse Transform Theory to generate random numbers from a Weibull distribution with parameters lambda(l), and beta(b). 
+rand_weibull uses Inverse Transform Method to generate random numbers from a Weibull distribution with parameters lambda(l), and beta(b). 
     l = lambda (rate)
     b = beta (shape)
     size = number of random numbers to be be generated
     seed = starting seed
 Algorithm from Goldsman Lecture Notes (M7L2)
 """
-def rand_weibull(l, k, size, seed=42):
+def rand_weib(l, b, size, seed=42):
     if not isinstance(l,(float,int)):
         raise TypeError('l must be numeric')
     if l <= 0:
         raise ValueError('l must be greater than zero')
-    if not isinstance(k,(float,int)):
-        raise TypeError('k must be numeric')
-    if k <= 0:
-        raise ValueError('k must be greater than zero')
+    if not isinstance(b,(float,int)):
+        raise TypeError('b must be numeric')
+    if b <= 0:
+        raise ValueError('b must be greater than zero')
     if not isinstance(size,int):
         raise TypeError('size must be an integer')
     if size <= 0:
@@ -139,17 +139,17 @@ def rand_weibull(l, k, size, seed=42):
     if seed <= 0:
         raise ValueError('seed must greater than zero')
     rand_unifs=desert_island(1,size,seed)
-    weibull_output=[]
+    weib_output=[]
     for i in rand_unifs:
-        weibull_output.append(l*(-math.log(1-i[0]))**(1/k))
-    return weibull_output
+        weib_output.append(l*(-math.log(1-i[0]))**(1/b))
+    return weib_output
 
 """
-rand_erlang uses Inverse Transform Theory and Convolution to generate random numbers from an Erlang distribution with parameters lambda(l), and number(n). 
-    n = number (shape)
-    l = lambda (rate)
-    size = number of random numbers to be be generated
-    seed = starting seed
+rand_erlang uses the Inverse Transform Method and Convolution to generate random numbers from an Erlang distribution with parameters lambda(l), and number(n). 
+    n: number (shape)
+    l: lambda (rate)
+    size: number of random numbers to be be generated
+    seed: integer used to initialize random number generator
 Algorithm from Goldsman Lecture Notes (M7L6)
 """
 def rand_erlang(n, l, size, seed=42):
@@ -178,7 +178,7 @@ def rand_erlang(n, l, size, seed=42):
         erlang_output.append((-1/l)*math.log(prod))
     return erlang_output
 """
-rand_gamma uses Inverse Transform Theory and Acceptance-Rejection to generate random numbers from a gamma distribution with parameters alpha(a) and beta(b). 
+rand_gamma uses the Inverse Transform and Acceptance-Rejection Methods to generate random numbers from a gamma distribution with parameters alpha(a) and beta(b). 
     a = alpha (shape)
     b = beta (rate)
     size = number of random numbers to be be generated
@@ -237,14 +237,14 @@ def rand_gamma(a, b, size, seed=42):
         return gamma_output
     
 """
-rand_normal uses Inverse Transform Theory to generate random numbers from a normal distribution with parameters mean(m), and variance(v). 
+rand_nor uses the Inverse Transform Method to generate random numbers from a normal distribution with parameters mean (m), and variance (v). 
     m = mean 
     v = variance
     size = number of random numbers to be be generated
     seed = starting seed
 Algorithm from Goldsman Lecture Notes (M7L3)
 """
-def rand_normal(m, v, size, seed=42):
+def rand_nor(m, v, size, seed=42):
     if not isinstance(m,(float,int)):
         raise TypeError('m must be numeric')
     if not isinstance(v,(float,int)):
@@ -260,13 +260,13 @@ def rand_normal(m, v, size, seed=42):
     if seed <= 0:
         raise ValueError('seed must greater than zero')
     rand_unifs=desert_island(1,size,seed)
-    norm_output=[]
+    nor_output=[]
     for i in rand_unifs:
-        norm_output.append(norm.ppf(i[0], m, v))
-    return norm_output
+        nor_output.append(norm.ppf(i[0], m, v))
+    return nor_output
 
 """
-rand_bern uses Inverse Transform Theory to generate random numbers from a Bernoulli distribution with parameter p. 
+rand_bern uses the Inverse Transform Method to generate random numbers from a Bernoulli distribution with parameter, probability of success (p). 
     p = probability of success 
     size = number of random numbers to be be generated
     seed = starting seed
@@ -295,7 +295,7 @@ def rand_bern(p, size, seed=42):
     return bern_output
     
 """
-rand_bin uses Inverse Transform Theory and Convolution to generate random numbers from a binomial distribution with parameters n and p. 
+rand_bin uses the Inverse Transform and Convolution Methods to generate random numbers from a binomial distribution with parameters n and p. 
     n = number of trials
     p = probability of success 
     size = number of random numbers to be be generated
@@ -330,7 +330,7 @@ def rand_bin(n, p, size, seed=42):
     return bin_output
 
 """
-rand_geom uses Inverse Transform Theory to generate random numbers from a geometric distribution with parameters p. 
+rand_geom uses the Inverse Transform Method to generate random numbers from a geometric distribution with parameter, probability of success (p). 
     p = probability of success 
     size = number of random numbers to be be generated
     seed = starting seed
@@ -390,13 +390,13 @@ def rand_negbin(n, p, size, seed=42):
     return negbin_output
 
 """
-rand_bin uses Inverse Transform Theory and Convolution to generate random numbers from a poisson distribution with parameter lambda(l). 
+rand_poisson uses Acceptance-Rejection Method to generate random numbers from a poisson distribution with parameter lambda(l). 
     l = lambda (rate)
     size = number of random numbers to be be generated
     seed = starting seed
 Algorithm from Goldsman Lecture Notes (M7L10)
 """
-def rand_poisson(l, size, seed=42):
+def rand_pois(l, size, seed=42):
     if not isinstance(l,(float,int)):
         raise TypeError('l must be numeric')
     if l <= 0:
@@ -410,7 +410,7 @@ def rand_poisson(l, size, seed=42):
     if seed <= 0:
         raise ValueError('seed must greater than zero')
     rand_unifs=desert_island(l+10,size,seed)
-    poisson_output=[]
+    pois_output=[]
     for i in rand_unifs:
         p=1
         X=-1
@@ -421,8 +421,13 @@ def rand_poisson(l, size, seed=42):
                 X=X+1
             else:
                 break
-        poisson_output.append(X)
-    return poisson_output
+        pois_output.append(X)
+    return pois_output
+
+
+
+
+
 
 
 
